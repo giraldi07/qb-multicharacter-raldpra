@@ -16,9 +16,6 @@ export const listenForNuiMessages = () => {
   });
 };
 
-// Handle play, create, delete
-// sendNuiMessage('selectCharacter', { cid: 1 });
-// sendNuiMessage('deleteCharacter', { cid: 1 });
 
 
 // Send NUI messages to the game client

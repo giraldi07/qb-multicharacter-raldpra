@@ -1,15 +1,14 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: process.env.NODE_ENV === 'production' ? './' : '/',
+  base: './', // ✅ PENTING! Agar path asset relatif saat dijalankan dalam FiveM
   build: {
-    outDir: 'build',
+    outDir: '../html', // ✅ Output langsung ke folder html/
     emptyOutDir: true,
     sourcemap: false,
   },
@@ -18,4 +17,4 @@ export default defineConfig({
     strictPort: true,
     cors: true,
   },
-});
+})

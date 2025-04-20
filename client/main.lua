@@ -15,7 +15,7 @@ CreateThread(function()
 	while true do
 		Wait(0)
 		if NetworkIsSessionStarted() then
-			TriggerEvent('qb-multicharacter:client:chooseChar')
+			TriggerEvent('bb-multicharacter:client:chooseChar')
 			return
 		end
 	end
@@ -93,7 +93,7 @@ local function skyCam(bool)
 end
 
 local function openCharMenu(bool)
-    QBCore.Functions.TriggerCallback("qb-multicharacter:server:GetNumberOfCharacters", function(result)
+    QBCore.Functions.TriggerCallback("bb-multicharacter:server:GetNumberOfCharacters", function(result)
         local translations = {}
         for k in pairs(Lang.fallback and Lang.fallback.phrases or Lang.phrases) do
             if k:sub(0, ('ui.'):len()) then
@@ -119,7 +119,7 @@ end
 
 -- Events
 
-RegisterNetEvent('qb-multicharacter:client:closeNUIdefault', function() -- This event is only for no starting apartments
+RegisterNetEvent('bb-multicharacter:client:closeNUIdefault', function() -- This event is only for no starting apartments
     if DoesEntityExist(charPed) then
         DeleteEntity(charPed)
     end    
@@ -140,14 +140,14 @@ RegisterNetEvent('qb-multicharacter:client:closeNUIdefault', function() -- This 
     TriggerEvent('qb-clothes:client:CreateFirstCharacter')
 end)
 
-RegisterNetEvent('qb-multicharacter:client:closeNUI', function()
+RegisterNetEvent('bb-multicharacter:client:closeNUI', function()
     if DoesEntityExist(charPed) then
         DeleteEntity(charPed)
     end    
     SetNuiFocus(false, false)
 end)
 
-RegisterNetEvent('qb-multicharacter:client:chooseChar', function()
+RegisterNetEvent('bb-multicharacter:client:chooseChar', function()
     SetNuiFocus(false, false)
     DoScreenFadeOut(10)
     Wait(1000)
@@ -164,7 +164,7 @@ RegisterNetEvent('qb-multicharacter:client:chooseChar', function()
     openCharMenu(true)
 end)
 
-RegisterNetEvent('qb-multicharacter:client:spawnLastLocation', function(coords, cData)
+RegisterNetEvent('bb-multicharacter:client:spawnLastLocation', function(coords, cData)
     QBCore.Functions.TriggerCallback('apartments:GetOwnedApartment', function(result)
         if result then
             TriggerEvent("apartments:client:SetHomeBlip", result.type)
@@ -201,7 +201,7 @@ end)
 RegisterNUICallback('closeUI', function(data, cb)
     local cData = data.cData
     DoScreenFadeOut(10)
-    TriggerServerEvent('qb-multicharacter:server:loadUserData', cData)
+    TriggerServerEvent('bb-multicharacter:server:loadUserData', cData)
     openCharMenu(false)
     SetEntityAsMissionEntity(charPed, true, true)
     if DoesEntityExist(charPed) then
@@ -221,14 +221,14 @@ RegisterNUICallback('disconnectButton', function(_, cb)
     if DoesEntityExist(charPed) then
         DeleteEntity(charPed)
     end    
-    TriggerServerEvent('qb-multicharacter:server:disconnect')
+    TriggerServerEvent('bb-multicharacter:server:disconnect')
     cb("ok")
 end)
 
 RegisterNUICallback('selectCharacter', function(data, cb)
     local cData = data.cData
     DoScreenFadeOut(10)
-    TriggerServerEvent('qb-multicharacter:server:loadUserData', cData)
+    TriggerServerEvent('bb-multicharacter:server:loadUserData', cData)
     openCharMenu(false)
     SetEntityAsMissionEntity(charPed, true, true)
     if DoesEntityExist(charPed) then
@@ -253,7 +253,7 @@ RegisterNUICallback('cDataPed', function(nData, cb)
         local temp_data = promise.new()
 
         -- Ambil skin dari server
-        QBCore.Functions.TriggerCallback('qb-multicharacter:server:getSkin', function(model, data)
+        QBCore.Functions.TriggerCallback('bb-multicharacter:server:getSkin', function(model, data)
             temp_model:resolve(model)
             temp_data:resolve(data)
         end, cData.citizenid)
@@ -284,7 +284,7 @@ end)
 
 
 RegisterNUICallback('setupCharacters', function(_, cb)
-    QBCore.Functions.TriggerCallback("qb-multicharacter:server:setupCharacters", function(result)
+    QBCore.Functions.TriggerCallback("bb-multicharacter:server:setupCharacters", function(result)
 	cached_player_skins = {}
         SendNUIMessage({
             action = "setupCharacters",
@@ -307,14 +307,14 @@ RegisterNUICallback('createNewCharacter', function(data, cb)
     elseif cData.gender == Lang:t("ui.female") then
         cData.gender = 1
     end
-    TriggerServerEvent('qb-multicharacter:server:createCharacter', cData)
+    TriggerServerEvent('bb-multicharacter:server:createCharacter', cData)
     Wait(500)
     cb("ok")
 end)
 
 RegisterNUICallback('removeCharacter', function(data, cb)
-    TriggerServerEvent('qb-multicharacter:server:deleteCharacter', data.citizenid)
+    TriggerServerEvent('bb-multicharacter:server:deleteCharacter', data.citizenid)
     DeletePed(charPed)
-    TriggerEvent('qb-multicharacter:client:chooseChar')
+    TriggerEvent('bb-multicharacter:client:chooseChar')
     cb("ok")
 end)

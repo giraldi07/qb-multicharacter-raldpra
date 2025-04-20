@@ -26,11 +26,11 @@ ui_page 'html/index.html'
 
 files {
     'html/index.html',
-    'html/style.css',
-    'html/reset.css',
-    'html/vue.js',
-    'html/swal2.js',
-    'html/profanity.js'
+    'html/assets/index-UKUzV2zY.css',
+    'html/assets/index-TQDZlfwq.js',
+    'html/assets/musicbg-D7CwhTIG.mp3',
+    'html/assets/myLogo-DiFUIK3v.png',
+    'html/assets/studiobg-BX_-Z8w2.png'
 }
 
 dependencies {
