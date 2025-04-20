@@ -26,11 +26,16 @@ ui_page 'html/index.html'
 
 files {
     'html/index.html',
-    'html/assets/index-UKUzV2zY.css',
-    'html/assets/index-TQDZlfwq.js',
+    'html/assets/index-CxJ7bOui.js',
+    'html/assets/index-WXE40xhL.css',
     'html/assets/musicbg-D7CwhTIG.mp3',
     'html/assets/myLogo-DiFUIK3v.png',
-    'html/assets/studiobg-BX_-Z8w2.png'
+    'html/assets/studiobg-BX_-Z8w2.png',
+    'html/assets/Rajdhani-Light-yqdWrT92.ttf',
+    'html/assets/Rajdhani-Regular-Dom0fR4-.ttf',
+    'html/assets/Rajdhani-Medium-DDHaQufz.ttf',
+    'html/assets/Rajdhani-SemiBold-nEoOYjXG.ttf',
+    'html/assets/Rajdhani-Bold-DpQCrXtY.ttf'
 }
 
 dependencies {
