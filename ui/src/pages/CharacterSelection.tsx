@@ -5,11 +5,18 @@ import { Character } from '../types';
 import { sendNuiMessage } from '../utils/nui';
 import { X } from 'lucide-react';
 
+// import audio bg
+import FileAudio from '../assets/audio/musicbg.mp3';
+// Logo
+import LogoImage from '../assets/icons/myLogo.png';
+
 interface CharacterSelectionProps {
   characters: Character[];
   maxSlots: number;
   onRefresh: () => void;
 }
+
+
 
 const CharacterSelection: React.FC<CharacterSelectionProps> = ({ 
   characters,
@@ -19,6 +26,21 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
   const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(null);
   const [isCreatingCharacter, setIsCreatingCharacter] = useState(false);
   const [animateIn, setAnimateIn] = useState(false);
+
+  // Untuk audio background
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
+  
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      audioRef.current.play().catch(() => {
+        setIsPlaying(false); // autoplay block fallback
+      });
+    }
+  }, []);
+  
   
   useEffect(() => {
     setAnimateIn(true);
@@ -51,15 +73,66 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
   };
   
   const handleCloseUI = () => {
+    console.log('Close button clicked'); // 👈 cek dulu ini muncul gak
     sendNuiMessage('closeUI');
   };
   
   return (
     <div className={`fixed inset-0 flex ${animateIn ? 'animate-fadeIn' : 'opacity-0'}`}>
+
+      {/*  Audio Musik Background */}
+      <div className="fixed top-6 left-[50vw] transform -translate-x-1/2 z-50">
+          <h3 className="cyber-label text-yellow-500 mb-2">Background Music</h3>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => {
+                if (!audioRef.current) return;
+                if (isPlaying) {
+                  audioRef.current.pause();
+                } else {
+                  audioRef.current.play();
+                }
+                setIsPlaying(!isPlaying);
+              }}
+              className="cyber-button px-2 py-1"
+            >
+              {isPlaying ? 'Pause' : 'Play'}
+            </button>
+            
+            <button
+              onClick={() => {
+                if (!audioRef.current) return;
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+                setIsPlaying(false);
+              }}
+              className="cyber-button px-2 py-1"
+            >
+              Stop
+            </button>
+
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              value={volume}
+              onChange={(e) => {
+                const vol = parseFloat(e.target.value);
+                setVolume(vol);
+                if (audioRef.current) {
+                  audioRef.current.volume = vol;
+                }
+              }}
+              className="w-24"
+            />
+          </div>
+       </div>
+
       {/* Left side - Character list */}
       <div className="w-[400px] h-full bg-black/40 backdrop-blur-sm p-6 border-r border-yellow-500/20">
         <div className="mb-8">
-          <h1 className="text-5xl cyber-text text-yellow-500 mb-2">AK4Y</h1>
+          <h1 className="text-5xl cyber-text text-yellow-500 mb-2">BlossomBiz</h1>
           <div className="cyber-button inline-block px-4 py-1">
             <span className="text-yellow-500 text-sm tracking-[0.2em]">CHARACTER SELECTOR</span>
           </div>
@@ -73,6 +146,7 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
           onDeleteCharacter={handleDeleteCharacter}
           maxSlots={maxSlots}
         />
+
       </div>
 
       {/* Center - Character preview */}
@@ -118,6 +192,7 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
                       </div>
                     ))}
                   </div>
+
                 </div>
               </div>
             </div>
@@ -174,6 +249,18 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
             </div>
           </div>
         )}
+
+        {/* Logo + Copyright */}
+        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-3">
+          <img 
+            src={LogoImage} 
+            alt="Logo" 
+            className="w-10 h-auto drop-shadow-lg" 
+          />
+          <p className="text-yellow-500 text-sm cyber-label whitespace-nowrap">
+            © 2025 BlossomBiz RP. All rights reserved.
+          </p>
+        </div>
       </div>
 
       {/* Close button */}
@@ -183,6 +270,15 @@ const CharacterSelection: React.FC<CharacterSelectionProps> = ({
       >
         <X className="w-6 h-6" />
       </button>
+
+
+      {/* Musick Background */}
+      <audio
+          ref={audioRef}
+          src={FileAudio}
+          loop
+          hidden
+      />
     </div>
   );
 };

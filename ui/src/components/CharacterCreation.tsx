@@ -6,6 +6,7 @@ interface CharacterCreationProps {
   onSubmit: (characterData: any) => void;
 }
 
+
 const CharacterCreation: React.FC<CharacterCreationProps> = ({ onCancel, onSubmit }) => {
   const [formData, setFormData] = useState({
     firstName: '',

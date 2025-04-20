@@ -1,4 +1,5 @@
 import React from 'react';
+import BgImage from '../assets/images/studiobg.png';
 
 interface BackgroundProps {
   children: React.ReactNode;
@@ -11,8 +12,8 @@ const Background: React.FC<BackgroundProps> = ({ children }) => {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(https://images.pexels.com/photos/3075993/pexels-photo-3075993.jpeg)',
-          filter: 'brightness(0.3) contrast(1.2)',
+          backgroundImage: `url(${BgImage})`,
+          filter: 'brightness(1) contrast(1.2)',
         }}
       />
       

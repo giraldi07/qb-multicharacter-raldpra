@@ -1,9 +1,9 @@
 fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
-author 'Kakarot'
+author 'RaldPra Blossom Team'
 description 'Allows players to create multiple characters'
-version '1.2.0'
+version '1.0.0'
 
 shared_scripts {
     '@qb-core/shared/locale.lua',

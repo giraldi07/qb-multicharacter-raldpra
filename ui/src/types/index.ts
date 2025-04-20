@@ -18,3 +18,4 @@ export interface NUIMessage {
 }
 
 export type NUICallback = (data: any) => void;
+

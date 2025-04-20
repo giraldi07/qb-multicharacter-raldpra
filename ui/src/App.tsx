@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Background from './components/Background';
 import CharacterSelection from './pages/CharacterSelection';
 import { Character } from './types';
@@ -101,6 +101,7 @@ function App() {
           maxSlots={maxSlots}
           onRefresh={handleRefresh}
         />
+
       </div>
     </Background>
   );
